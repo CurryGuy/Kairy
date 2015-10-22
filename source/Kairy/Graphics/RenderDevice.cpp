@@ -7,7 +7,6 @@
 
 #ifdef _3DS
 #include "base_vsh_shbin.h"
-#include "../3DS/khax.h"
 #include "../3DS/VertexPool.h"
 #else
 #include <Kairy/Util/StringFormat.h>
@@ -130,8 +129,6 @@ bool RenderDevice::init(Uint32 cmd_size)
 	aptCloseSession();
 
 	osSetSpeedupEnable(true);
-	
-	khaxInit();
 
 #else
 	glfwInit();
@@ -679,7 +676,6 @@ void RenderDevice::destroy(void)
         vramFree(_frameBuffer);
         vramFree(_depthBuffer);
         linearFree(_cmdBuffer);
-		khaxExit();
 		osSetSpeedupEnable(false);
 #else
 		glfwDestroyWindow(_window);
