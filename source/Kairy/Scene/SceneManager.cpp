@@ -157,8 +157,8 @@ void SceneManager::draw()
 		
 		scene->updateTransform();
 
-		if (scene->getChildrenCount() > 0)
-		{
+		/*if (scene->getChildrenCount() > 0)
+		{*/
 			device->setTargetScreen(Screen::Top);
 			device->clear(scene->getColor());
 			device->startFrame();
@@ -169,10 +169,10 @@ void SceneManager::draw()
 			}
 
 			device->endFrame();
-		}
+		//}
 
-		if (scene->getChildrenCountBot() > 0)
-		{
+		/*if (scene->getChildrenCountBot() > 0)
+		{*/
 			device->setTargetScreen(Screen::Bottom);
 			device->clear(scene->getColorBot());
 			device->startFrame();
@@ -183,7 +183,7 @@ void SceneManager::draw()
 			}
 
 			device->endFrame();
-		}
+		//}
 
 		device->setTargetScreen(prevScreen);
 
