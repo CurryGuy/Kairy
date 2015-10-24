@@ -1,4 +1,3 @@
-#include "Timer.h"
 /******************************************************************************
 *
 * Copyright (C) 2015 Nanni
@@ -25,7 +24,7 @@
 
 //=============================================================================
 
-Timer::Timer(void)
+inline Timer::Timer(void)
 	: _autoRestart(true)
 	, _enabled(true)
 	, _start(Time::getCurrentTime())
