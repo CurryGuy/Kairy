@@ -29,6 +29,7 @@ NS_KAIRY_BEGIN
 //=============================================================================
 
 Sequence::Sequence(const std::vector<std::shared_ptr<Action>>& actions)
+	: Action()
 {
 	_actions = actions;
 }
@@ -50,7 +51,8 @@ void Sequence::start(Node* target)
 //=============================================================================
 
 Sequence::Sequence(const std::initializer_list<std::shared_ptr<Action>>& actions)
-	: _actions(actions.begin(), actions.end())
+	: Action()
+	, _actions(actions.begin(), actions.end())
 {
 }
 

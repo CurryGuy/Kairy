@@ -26,16 +26,22 @@
 
 NS_KAIRY_BEGIN
 
+//=============================================================================
+
 RepeatForever::RepeatForever(const std::shared_ptr<Action>& action)
 {
 	_action = action;
 }
+
+//=============================================================================
 
 void RepeatForever::start(Node* target)
 {
 	Action::start(target);
 	_action->start(target);
 }
+
+//=============================================================================
 
 void RepeatForever::update(float dt)
 {
@@ -46,5 +52,7 @@ void RepeatForever::update(float dt)
 	
 	_action->update(dt);
 }
+
+//=============================================================================
 
 NS_KAIRY_END

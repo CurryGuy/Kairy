@@ -41,7 +41,7 @@ MoveBy::MoveBy(float duration, const Vec2& position)
 void MoveBy::start(Node* target)
 {
 	_startPosition = target->getPosition();
-	Action::start(target);
+	FiniteTimeAction::start(target);
 }
 
 //=============================================================================

@@ -41,7 +41,7 @@ MoveTo::MoveTo(float duration, const Vec2& position)
 void MoveTo::start(Node* target)
 {
 	_startPosition = target->getPosition();
-	Action::start(target);
+	FiniteTimeAction::start(target);
 }
 
 //=============================================================================
