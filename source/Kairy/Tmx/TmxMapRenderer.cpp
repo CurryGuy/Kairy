@@ -30,7 +30,8 @@ NS_KAIRY_BEGIN
 //=============================================================================
 
 TmxMapRenderer::TmxMapRenderer(void)
-	: _mapWidth(0)
+	: Node()
+	, _mapWidth(0)
 	, _mapHeight(0)
 	, _childsLayer(0)
 	, _tileWidth(0)
@@ -146,6 +147,8 @@ void TmxMapRenderer::draw(int layerIndex)
 
 void TmxMapRenderer::update(float dt)
 {
+	Node::update(dt);
+
 	for (auto& tileset : _tilesets)
 	{
 		for (auto& ait : tileset->animations)
