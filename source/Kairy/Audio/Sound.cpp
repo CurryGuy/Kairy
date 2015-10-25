@@ -237,11 +237,12 @@ void Sound::setPan(float pan)
 void Sound::play()
 {
 	if (!_audio->isInitialized() ||
-		!_stopped ||
 		_audio->getFreeChannelsCount() < getChannels())
 	{
 		return;
 	}
+
+	stop();
 
 #ifdef _3DS
 	_channelL = -1;
