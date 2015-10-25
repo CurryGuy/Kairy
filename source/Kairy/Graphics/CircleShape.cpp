@@ -34,6 +34,20 @@ NS_KAIRY_BEGIN
 
 //=============================================================================
 
+std::shared_ptr<CircleShape> CircleShape::create(void)
+{
+	return std::make_shared<CircleShape>();
+}
+
+//======================================================================
+
+std::shared_ptr<CircleShape> CircleShape::create(float radius)
+{
+	return std::make_shared<CircleShape>(radius);
+}
+
+//=============================================================================
+
 CircleShape::CircleShape()
 	: Shape()
 {

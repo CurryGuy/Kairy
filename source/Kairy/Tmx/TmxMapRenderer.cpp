@@ -29,6 +29,27 @@ NS_KAIRY_BEGIN
 
 //=============================================================================
 
+std::shared_ptr<TmxMapRenderer> TmxMapRenderer::create(void)
+{
+	return std::make_shared<TmxMapRenderer>();
+}
+
+//=============================================================================
+
+std::shared_ptr<TmxMapRenderer> TmxMapRenderer::create(const TmxMap & map, Texture::Location location)
+{
+	auto mapRenderer = std::make_shared<TmxMapRenderer>();
+
+	if (!mapRenderer || !mapRenderer->setMap(map, location))
+	{
+		return nullptr;
+	}
+
+	return mapRenderer;
+}
+
+//=============================================================================
+
 TmxMapRenderer::TmxMapRenderer(void)
 	: Node()
 	, _mapWidth(0)
@@ -44,7 +65,7 @@ TmxMapRenderer::TmxMapRenderer(void)
 
 //=============================================================================
 
-TmxMapRenderer::TmxMapRenderer(const TmxMap& map, Texture::Location location)
+ TmxMapRenderer::TmxMapRenderer(const TmxMap& map, Texture::Location location)
 	: TmxMapRenderer()
 {
 	setMap(map, location);
@@ -78,14 +99,16 @@ void TmxMapRenderer::draw(int layerIndex)
 
 	updateTransform();
 
+	auto camera = getCamera();
+
 	if (_color.a > 0 && _type == TmxMap::Orientation::Orthogonal)
 	{
-		int startX = int(_camera.x) / _tileWidth;
-		int startY = int(_camera.y) / _tileHeight;
-		int offsX = int(_camera.x) % _tileWidth;
-		int offsY = int(_camera.y) % _tileHeight;
-		int width = int(_camera.width) / _tileWidth + 1 + (offsX ? 1 : 0);
-		int height = int(_camera.height) / _tileHeight + 1 + (offsY ? 1 : 0);
+		int startX = int(camera.x) / _tileWidth;
+		int startY = int(camera.y) / _tileHeight;
+		int offsX = int(camera.x) % _tileWidth;
+		int offsY = int(camera.y) % _tileHeight;
+		int width = int(camera.width) / _tileWidth + 1 + (offsX ? 1 : 0);
+		int height = int(camera.height) / _tileHeight + 1 + (offsY ? 1 : 0);
 
 		Layer& layer = _layers[layerIndex];
 
@@ -320,6 +343,21 @@ bool TmxMapRenderer::setMap(const TmxMap& map, Texture::Location location)
 	_loaded = true;
 
 	return true;
+}
+
+//=============================================================================
+
+Rect TmxMapRenderer::getCamera() const
+{
+	return Rect(_position, _viewSize);
+}
+
+//=============================================================================
+
+void TmxMapRenderer::setCamera(const Rect & camera)
+{
+	setPosition(camera.getOrigin());
+	_viewSize = camera.getSize();
 }
 
 //=============================================================================

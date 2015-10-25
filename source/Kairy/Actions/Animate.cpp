@@ -36,6 +36,13 @@ Animate::Animate(const Animation& animation)
 
 //======================================================================
 
+std::shared_ptr<Animate> Animate::create(const Animation & animation)
+{
+	return std::make_shared<Animate>(animation);
+}
+
+//======================================================================
+
 void Animate::start(Node* target)
 {
 	auto sprite = static_cast<Sprite*>(target);

@@ -29,6 +29,83 @@ NS_KAIRY_BEGIN
 
 //=============================================================================
 
+std::shared_ptr<Text> Text::create(void)
+{
+	return std::make_shared<Text>();
+}
+
+//=============================================================================
+
+std::shared_ptr<Text> Text::create(const std::string & filename)
+{
+	auto text = std::make_shared<Text>();
+
+	if (!text || !text->loadFont(filename))
+	{
+		return nullptr;
+	}
+
+	return text;
+}
+
+//=============================================================================
+
+std::shared_ptr<Text> Text::create(const std::string & filename, float size)
+{
+	auto text = std::make_shared<Text>();
+
+	if (!text || !text->loadFont(filename, size))
+	{
+		return nullptr;
+	}
+
+	return text;
+}
+
+//=============================================================================
+
+std::shared_ptr<Text> Text::createTTF(const std::string & filename, float size)
+{
+	auto text = std::make_shared<Text>();
+
+	if (!text || !text->loadFont(filename, size))
+	{
+		return nullptr;
+	}
+
+	return text;
+}
+
+//=============================================================================
+
+std::shared_ptr<Text> Text::createTTF(const byte * buffer, float size)
+{
+	auto text = std::make_shared<Text>();
+
+	if (!text || !text->loadFont(buffer, size))
+	{
+		return nullptr;
+	}
+
+	return text;
+}
+
+//=============================================================================
+
+std::shared_ptr<Text> Text::createBMF(const std::string & filename)
+{
+	auto text = std::make_shared<Text>();
+
+	if (!text || !text->loadFont(filename))
+	{
+		return nullptr;
+	}
+
+	return text;
+}
+
+//=============================================================================
+
 Text::Text(void)
 	: Node()
 	, _lineWidth(0)
@@ -78,6 +155,13 @@ bool Text::loadFont(const std::string & filename)
 bool Text::loadFont(const std::string & filename, float size)
 {
 	return _font.loadTtf(filename, size);
+}
+
+//=============================================================================
+
+bool Text::loadFont(const byte * buffer, float size)
+{
+	return _font.loadTtf(buffer, size);
 }
 
 //=============================================================================
@@ -256,3 +340,4 @@ void Text::updateCharacters()
 //=============================================================================
 
 NS_KAIRY_END
+

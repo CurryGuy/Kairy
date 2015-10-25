@@ -38,6 +38,13 @@ RotateBy::RotateBy(float duration, float angle)
 
 //=============================================================================
 
+std::shared_ptr<RotateBy> RotateBy::create(float duration, float angle)
+{
+	return std::make_shared<RotateBy>(duration, angle);
+}
+
+//======================================================================
+
 void RotateBy::start(Node* target)
 {
 	_startAngle = target->getAngle();

@@ -36,6 +36,13 @@ FadeIn::FadeIn(float duration)
 
 //=============================================================================
 
+std::shared_ptr<FadeIn> FadeIn::create(float duration)
+{
+	return std::make_shared<FadeIn>(duration);
+}
+
+//======================================================================
+
 void FadeIn::step(float dt)
 {
 	_target->setOpacity(byte(dt * 255.0f));

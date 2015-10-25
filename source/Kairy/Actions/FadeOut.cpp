@@ -36,6 +36,13 @@ FadeOut::FadeOut(float duration)
 
 //=============================================================================
 
+std::shared_ptr<FadeOut> FadeOut::create(float duration)
+{
+	return std::make_shared<FadeOut>(duration);
+}
+
+//======================================================================
+
 void FadeOut::step(float dt)
 {
 	_target->setOpacity(255 - byte(dt * 255.0f));

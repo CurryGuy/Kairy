@@ -35,6 +35,7 @@ class Sprite;
 class Animate : public Action
 {
 public:
+	static std::shared_ptr<Animate> create(const Animation& animation);
 
 	Animate(const Animation& animation);
 

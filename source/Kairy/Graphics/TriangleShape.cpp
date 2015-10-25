@@ -60,6 +60,20 @@ TriangleShape::TriangleShape(void)
 
 //=============================================================================
 
+std::shared_ptr<TriangleShape> TriangleShape::create(void)
+{
+	return std::make_shared<TriangleShape>();
+}
+
+//=============================================================================
+
+std::shared_ptr<TriangleShape> TriangleShape::create(const Vec2 & v1, const Vec2 & v2, const Vec2 & v3)
+{
+	return std::make_shared<TriangleShape>(v1, v2, v3);
+}
+
+//=============================================================================
+
 kairy::TriangleShape::TriangleShape(const Vec2& v1, const Vec2& v2, const Vec2& v3)
 	: TriangleShape()
 {

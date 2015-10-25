@@ -32,6 +32,11 @@ NS_KAIRY_BEGIN
 class TriangleShape : public OutlinedShape
 {
 public:
+	static std::shared_ptr<TriangleShape>
+		create(void);
+
+	static std::shared_ptr<TriangleShape>
+		create(const Vec2& v1, const Vec2& v2, const Vec2& v3);
 
 	TriangleShape(void);
 

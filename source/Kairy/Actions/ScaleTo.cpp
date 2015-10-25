@@ -40,6 +40,20 @@ ScaleTo::ScaleTo(float duration, float scale)
 
 //=============================================================================
 
+std::shared_ptr<ScaleTo> ScaleTo::create(float duration, float scale)
+{
+	return std::make_shared<ScaleTo>(duration, scale);
+}
+
+//======================================================================
+
+std::shared_ptr<ScaleTo> ScaleTo::create(float duration, float scaleX, float scaleY)
+{
+	return std::make_shared<ScaleTo>(duration, scaleX, scaleY);
+}
+
+//======================================================================
+
 ScaleTo::ScaleTo(float duration, float scaleX, float scaleY)
 	: FiniteTimeAction(duration)
 {

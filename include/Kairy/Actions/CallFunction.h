@@ -32,12 +32,17 @@ NS_KAIRY_BEGIN
 class CallFunction : public Action
 {
 public:
-	CallFunction(const std::function<void(float)>& function);
+	using Function = std::function<void(float)>;
+
+	static std::shared_ptr<CallFunction>
+		create(const Function& function);
+
+	CallFunction(const Function& function);
 
 	virtual void update(float dt) override;
 
 private:
-	std::function<void(float)> _function;
+	Function _function;
 };
 
 NS_KAIRY_END

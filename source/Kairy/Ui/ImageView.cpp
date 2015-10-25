@@ -28,6 +28,27 @@ NS_KAIRY_BEGIN
 
 //=============================================================================
 
+std::shared_ptr<ImageView> ImageView::create(void)
+{
+	return std::make_shared<ImageView>();
+}
+
+//=============================================================================
+
+std::shared_ptr<ImageView> ImageView::create(const std::string & image)
+{
+	auto imageView = std::make_shared<ImageView>();
+
+	if (!imageView || !imageView->setImage(image))
+	{
+		return nullptr;
+	}
+
+	return imageView;
+}
+
+//=============================================================================
+
 ImageView::ImageView(void)
 	: Control()
 {

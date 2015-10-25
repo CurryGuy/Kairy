@@ -38,13 +38,13 @@ public:
 
 	virtual ~SceneManager();
 
-	bool changeScene(std::unique_ptr<Scene>& scene);
+	bool changeScene(const std::shared_ptr<Scene>& scene);
 
 	bool popScene();
 
-	bool popScene(std::unique_ptr<Scene>& poppedScene);
+	bool popScene(std::shared_ptr<Scene>& poppedScene);
 
-	bool pushScene(std::unique_ptr<Scene>& scene);
+	bool pushScene(const std::shared_ptr<Scene>& scene);
 
 	Scene* getCurrentScene() const;
 
@@ -70,7 +70,7 @@ private:
 	SceneManager(void) = default;
 	SceneManager(const SceneManager&) = default;
 
-	std::stack<std::unique_ptr<Scene>> _sceneStack;
+	std::stack<std::shared_ptr<Scene>> _sceneStack;
 };
 
 NS_KAIRY_END

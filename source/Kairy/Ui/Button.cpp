@@ -28,6 +28,30 @@ NS_KAIRY_BEGIN
 
 //=============================================================================
 
+std::shared_ptr<Button> Button::create(void)
+{
+	return std::make_shared<Button>();
+}
+
+//=============================================================================
+
+std::shared_ptr<Button> Button::create(
+	const std::string & normalImage,
+	const std::string & clickedImage,
+	const std::string & disabledImage)
+{
+	auto button = std::make_shared<Button>(normalImage, clickedImage, disabledImage);
+	
+	if (!button || !button->setImages(normalImage, clickedImage, disabledImage))
+	{
+		return nullptr;
+	}
+
+	return button;
+}
+
+//=============================================================================
+
 Button::Button(void)
 	: Control()
 {

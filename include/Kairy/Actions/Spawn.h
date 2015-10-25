@@ -32,6 +32,11 @@ NS_KAIRY_BEGIN
 class Spawn : public Action
 {
 public:
+	static std::shared_ptr<Spawn>
+		create(const std::vector<std::shared_ptr<Action>>& actions);
+
+	static std::shared_ptr<Spawn>
+		create(const std::initializer_list<std::shared_ptr<Action>>& actions);
 
 	Spawn(const std::vector<std::shared_ptr<Action>>& actions);
 

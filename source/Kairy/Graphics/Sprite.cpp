@@ -34,6 +34,83 @@ NS_KAIRY_BEGIN
 
 //=============================================================================
 
+std::shared_ptr<Sprite> Sprite::create(void)
+{
+	return std::make_shared<Sprite>();
+}
+
+//=============================================================================
+
+std::shared_ptr<Sprite> Sprite::create(const byte * buffer, Uint32 buffer_size, Texture::Location location)
+{
+	auto sprite = std::make_shared<Sprite>();
+
+	if (!sprite || !sprite->loadTexture(buffer, buffer_size, location))
+	{
+		return nullptr;
+	}
+
+	return sprite;
+}
+
+//=============================================================================
+
+std::shared_ptr<Sprite> Sprite::create(const byte * pixels, int width, int height, Texture::Location location)
+{
+	auto sprite = std::make_shared<Sprite>();
+
+	if (!sprite || !sprite->loadTexture(pixels, width, height, location))
+	{
+		return nullptr;
+	}
+
+	return sprite;
+}
+
+//=============================================================================
+
+std::shared_ptr<Sprite> Sprite::create(const std::string & filename, Texture::Location location)
+{
+	auto sprite = std::make_shared<Sprite>();
+
+	if (!sprite || !sprite->loadTexture(filename, location))
+	{
+		return nullptr;
+	}
+
+	return sprite;
+}
+
+//=============================================================================
+
+std::shared_ptr<Sprite> Sprite::create(const std::string & zipfile, const std::string & filename, Texture::Location location)
+{
+	auto sprite = std::make_shared<Sprite>();
+
+	if (!sprite || !sprite->loadTexture(zipfile, filename, location))
+	{
+		return nullptr;
+	}
+
+	return sprite;
+}
+
+//=============================================================================
+
+std::shared_ptr<Sprite> Sprite::create(int width, int height, const Color & color, Texture::Location location)
+{
+	auto sprite = std::make_shared<Sprite>();
+
+	if (!sprite || !sprite->createTexture(width, height, color, location))
+	{
+		return nullptr;
+	}
+
+	return sprite;
+}
+
+//=============================================================================
+
 Sprite::Sprite(void)
 	: Node()
 {
@@ -215,6 +292,15 @@ bool Sprite::loadTexture(const std::string& filename, Texture::Location location
 
 //=============================================================================
 
+bool Sprite::loadTexture(const std::string & zipfile, const std::string & filename, Texture::Location location)
+{
+	bool ret = _texture.load(zipfile, filename, location);
+	updateTextureRect();
+	return ret;
+}
+
+//=============================================================================
+
 bool Sprite::loadTexture(const byte* pixels, int width, int height, Texture::Location location)
 {
 	bool ret = _texture.load(pixels, width, height, location);
@@ -268,3 +354,4 @@ void Sprite::init()
 //=============================================================================
 
 NS_KAIRY_END
+

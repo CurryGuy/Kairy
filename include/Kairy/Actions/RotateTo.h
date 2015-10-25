@@ -32,6 +32,9 @@ NS_KAIRY_BEGIN
 class RotateTo : public FiniteTimeAction
 {
 public:
+	static std::shared_ptr<RotateTo>
+		create(float duration, float angle);
+
 	RotateTo(float duration, float angle);
 
 	virtual void start(Node* target);

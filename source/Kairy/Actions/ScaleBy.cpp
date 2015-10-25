@@ -40,6 +40,20 @@ ScaleBy::ScaleBy(float duration, float scale)
 
 //=============================================================================
 
+std::shared_ptr<ScaleBy> ScaleBy::create(float duration, float scale)
+{
+	return std::make_shared<ScaleBy>(duration, scale);
+}
+
+//======================================================================
+
+std::shared_ptr<ScaleBy> ScaleBy::create(float duration, float scaleX, float scaleY)
+{
+	return std::make_shared<ScaleBy>(duration, scaleX, scaleY);
+}
+
+//======================================================================
+
 ScaleBy::ScaleBy(float duration, float scaleX, float scaleY)
 	: FiniteTimeAction(duration)
 {

@@ -32,6 +32,8 @@ NS_KAIRY_BEGIN
 class RepeatForever : public Action
 {
 public:
+	static std::shared_ptr<RepeatForever>
+		create(const std::shared_ptr<Action>& action);
 
 	RepeatForever(const std::shared_ptr<Action>& action);
 

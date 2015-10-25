@@ -4,6 +4,27 @@ NS_KAIRY_BEGIN
 
 //=============================================================================
 
+std::shared_ptr<CheckBox> CheckBox::create(void)
+{
+	return std::make_shared<CheckBox>();
+}
+
+//=============================================================================
+
+std::shared_ptr<CheckBox> CheckBox::create(const std::string & uncheckedImage, const std::string & checkedImage, const std::string & disabledImage)
+{
+	auto cb = std::make_shared<CheckBox>();
+
+	if (!cb || !cb->setImages(uncheckedImage, checkedImage, disabledImage))
+	{
+		return nullptr;
+	}
+
+	return cb;
+}
+
+//=============================================================================
+
 CheckBox::CheckBox()
 	: Control()
 	, _checkCallback(nullptr)

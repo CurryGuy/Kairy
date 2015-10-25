@@ -25,10 +25,20 @@
 #include <Kairy/Actions/DelayTime.h>
 
 NS_KAIRY_BEGIN
+//======================================================================
+
+std::shared_ptr<DelayTime> DelayTime::create(const Time & time)
+{
+	return std::make_shared<DelayTime>(time);
+}
+
+//======================================================================
 
 DelayTime::DelayTime(const Time& delay)
 	: FiniteTimeAction(delay.asSeconds())
 {
 }
+
+//======================================================================
 
 NS_KAIRY_END

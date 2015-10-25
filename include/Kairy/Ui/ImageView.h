@@ -33,6 +33,12 @@ NS_KAIRY_BEGIN
 class ImageView : public Control
 {
 public:
+	static std::shared_ptr<ImageView>
+		create(void);
+
+	static std::shared_ptr<ImageView>
+		create(const std::string& image);
+
 	ImageView(void);
 
 	ImageView(const std::string& image);

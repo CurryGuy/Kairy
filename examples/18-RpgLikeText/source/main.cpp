@@ -10,13 +10,13 @@ class TestScene : public Scene
 public:
 	bool onCreate() override
 	{
-		const std::string str =
+		constexpr auto str =
 		"Once you eliminate the impossible, \n"
 		"whatever remains, no matter how improbable, \n"
 		"must be the truth.";
 		
 		// Create the text node
-		_text = std::make_shared<Text>("assets/font.fnt");
+		_text = Text::create("assets/font.fnt");
 		
 		_text->setString(str);
 		_text->setPosition(0, 0);
@@ -45,12 +45,10 @@ public:
 			{
 				characterSprite->setOpacity(0);
 				
-				auto wait = std::make_shared<DelayTime>(Time::seconds(0.3f * i));
-				auto fadeIn = std::make_shared<FadeIn>(1.0f);
-			
-				std::shared_ptr<Sequence> sequence(new Sequence({
-					wait, fadeIn
-				}));
+				auto sequence = Sequence::create({
+					DelayTime::create(Time::seconds(0.3f * i)),
+					FadeIn::create(1.0f)
+				});
 			
 				characterSprite->runAction(sequence);
 			}
@@ -67,20 +65,19 @@ int main(int argc, char* argv[])
 {
 	auto device = RenderDevice::getInstance();
 	auto audio = AudioDevice::getInstance();
+	auto sceneManager = SceneManager::getInstance();
 
 	device->init();
 	audio->init();
 
 	device->setQuitOnStart(true);
 
-	std::unique_ptr<Scene> scene(new TestScene());
-
-	SceneManager::getInstance()->changeScene(scene);
+	sceneManager->changeScene(std::make_shared<TestScene>());
 
 	while (device->isRunning())
 	{
-		SceneManager::getInstance()->update(device->getDeltaTime());
-		SceneManager::getInstance()->draw();
+		sceneManager->update(device->getDeltaTime());
+		sceneManager->draw();
 
 		device->swapBuffers();
 	}

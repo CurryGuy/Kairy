@@ -32,6 +32,12 @@ NS_KAIRY_BEGIN
 class CircleShape : public Shape
 {
 public:
+	static std::shared_ptr<CircleShape>
+		create(void);
+
+	static std::shared_ptr<CircleShape>
+		create(float radius);
+
 	enum
 	{
 		MAX_SEGMENTS = 200

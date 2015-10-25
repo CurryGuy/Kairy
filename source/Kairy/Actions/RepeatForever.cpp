@@ -35,6 +35,13 @@ RepeatForever::RepeatForever(const std::shared_ptr<Action>& action)
 
 //=============================================================================
 
+std::shared_ptr<RepeatForever> RepeatForever::create(const std::shared_ptr<Action>& action)
+{
+	return std::make_shared<RepeatForever>(action);
+}
+
+//======================================================================
+
 void RepeatForever::start(Node* target)
 {
 	Action::start(target);

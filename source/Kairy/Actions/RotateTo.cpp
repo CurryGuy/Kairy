@@ -38,6 +38,13 @@ RotateTo::RotateTo(float duration, float angle)
 
 //=============================================================================
 
+std::shared_ptr<RotateTo> RotateTo::create(float duration, float angle)
+{
+	return std::make_shared<RotateTo>(duration, angle);
+}
+
+//======================================================================
+
 void RotateTo::start(Node* target)
 {
 	_startAngle = target->getAngle();

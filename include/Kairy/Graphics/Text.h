@@ -33,6 +33,24 @@ NS_KAIRY_BEGIN
 class Text : public Node
 {
 public:
+	static std::shared_ptr<Text>
+		create(void);
+
+	static std::shared_ptr<Text>
+		create(const std::string& filename);
+
+	static std::shared_ptr<Text>
+		create(const std::string& filename, float size);
+
+	static std::shared_ptr<Text>
+		createTTF(const std::string& filename, float size);
+
+	static std::shared_ptr<Text>
+		createTTF(const byte* buffer, float size);
+
+	static std::shared_ptr<Text>
+		createBMF(const std::string& filename);
+
     Text(void);
 
 	Text(const std::string& filename);
@@ -46,6 +64,8 @@ public:
 	bool loadFont(const std::string& filename);
 
 	bool loadFont(const std::string& filename, float size);
+
+	bool loadFont(const byte* buffer, float size);
 	
 	bool loadFont(float size);
 	

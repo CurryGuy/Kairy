@@ -32,6 +32,12 @@ NS_KAIRY_BEGIN
 class ScaleBy : public FiniteTimeAction
 {
 public:
+	static std::shared_ptr<ScaleBy>
+		create(float duration, float scale);
+
+	static std::shared_ptr<ScaleBy>
+		create(float duration, float scaleX, float scaleY);
+
 	ScaleBy(float duration, float scale);
 
 	ScaleBy(float duration, float scaleX, float scaleY);

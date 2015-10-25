@@ -34,6 +34,27 @@ NS_KAIRY_BEGIN
 
 //=============================================================================
 
+inline std::shared_ptr<LineShape> LineShape::create(void)
+{
+	return std::make_shared<LineShape>();
+}
+
+//=============================================================================
+
+inline std::shared_ptr<LineShape> LineShape::create(float x0, float y0, float x1, float y1, float thickness)
+{
+	return std::make_shared<LineShape>(x0, y0, x1, y1, thickness);
+}
+
+//=============================================================================
+
+inline std::shared_ptr<LineShape> LineShape::create(const Vec2 & start, const Vec2 & end, float thickness)
+{
+	return std::make_shared<LineShape>(start, end, thickness);
+}
+
+//=============================================================================
+
 LineShape::LineShape(void) :
 	Shape()
 {

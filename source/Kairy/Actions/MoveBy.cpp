@@ -38,6 +38,13 @@ MoveBy::MoveBy(float duration, const Vec2& position)
 
 //=============================================================================
 
+std::shared_ptr<MoveBy> MoveBy::create(float duration, const Vec2 & position)
+{
+	return std::make_shared<MoveBy>(duration, position);
+}
+
+//======================================================================
+
 void MoveBy::start(Node* target)
 {
 	_startPosition = target->getPosition();

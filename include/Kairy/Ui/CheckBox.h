@@ -33,7 +33,16 @@ NS_KAIRY_BEGIN
 class CheckBox : public Control
 {
 public:
-	typedef std::function<void(bool)> CheckCallback;
+	using CheckCallback = std::function<void(bool)>;
+
+	static std::shared_ptr<CheckBox>
+		create(void);
+
+	static std::shared_ptr<CheckBox>
+		create(
+			const std::string& uncheckedImage,
+			const std::string& checkedImage,
+			const std::string& disabledImage = "");
 
 	CheckBox(void);
 

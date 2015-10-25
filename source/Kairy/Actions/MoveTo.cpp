@@ -38,6 +38,13 @@ MoveTo::MoveTo(float duration, const Vec2& position)
 
 //=============================================================================
 
+std::shared_ptr<MoveTo> MoveTo::create(float duration, const Vec2 & position)
+{
+	return std::make_shared<MoveTo>(duration, position);
+}
+
+//======================================================================
+
 void MoveTo::start(Node* target)
 {
 	_startPosition = target->getPosition();

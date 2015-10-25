@@ -11,9 +11,9 @@ public:
 	bool onCreate() override
 	{
 		// Create a Sprite shared_ptr
-		_sprite = std::make_shared<Sprite>("assets/sprite.png");
+		_sprite = Sprite::create("assets/sprite.png");
 		// Create the sprite bounds rect
-		_bounds = std::make_shared<RectangleShape>(_sprite->getSize());
+		_bounds = RectangleShape::create(_sprite->getSize());
 		_bounds->setColor(Color::Transparent);
 		_bounds->setOutlineColor(Color::Blue);
 		
@@ -28,7 +28,7 @@ public:
 		addChild(_sprite);
 		
 		// Add a red triangle to the bottom screen
-		auto triangle = std::make_shared<TriangleShape>(Vec2(-30, 30), Vec2(0, 0), Vec2(30, 30));
+		auto triangle = TriangleShape::create(Vec2(-30, 30), Vec2(0, 0), Vec2(30, 30));
 		triangle->setPosition((getScreenSize(Screen::Bottom) - triangle->getSize()) / 2.0f);
 		triangle->setColor(Color::Red);
 		addChildBot(triangle);
@@ -64,20 +64,19 @@ int main(int argc, char* argv[])
 {
 	auto device = RenderDevice::getInstance();
 	auto audio = AudioDevice::getInstance();
+	auto sceneManager = SceneManager::getInstance();
 
 	device->init();
 	audio->init();
 
 	device->setQuitOnStart(true);
 
-	std::unique_ptr<Scene> scene(new TestScene());
-
-	SceneManager::getInstance()->changeScene(scene);
+	sceneManager->changeScene(std::make_shared<TestScene>());
 
 	while (device->isRunning())
 	{
-		SceneManager::getInstance()->update(device->getDeltaTime());
-		SceneManager::getInstance()->draw();
+		sceneManager->update(device->getDeltaTime());
+		sceneManager->draw();
 
 		device->swapBuffers();
 	}

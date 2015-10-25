@@ -33,6 +33,13 @@ NS_KAIRY_BEGIN
 class TmxMapRenderer : public Node
 {
 public:
+	static std::shared_ptr<TmxMapRenderer>
+		create(void);
+
+	static std::shared_ptr<TmxMapRenderer>
+		create(const TmxMap& map,
+			Texture::Location location = Texture::Location::Default);
+
     TmxMapRenderer(void);
 
     TmxMapRenderer(const TmxMap& map,
@@ -71,9 +78,13 @@ public:
 
 	inline void setChildsLayer(int index) { _childsLayer = index; }
 
-	inline Rect& getCamera() { return _camera; }
+	inline void setViewSize(const Vec2& size) { _viewSize = size; }
 
-	inline void setCamera(const Rect& camera) { _camera = camera; }
+	inline Vec2 getViewSize() const { return _viewSize; }
+
+	Rect getCamera() const;
+
+	void setCamera(const Rect& camera);
 
 protected:
     struct Tile
@@ -116,7 +127,7 @@ protected:
     int _mapWidth;
     int _mapHeight;
 	int _childsLayer;
-	Rect _camera;
+	Vec2 _viewSize;
     Uint16 _tileWidth;
     Uint16 _tileHeight;
     bool _loaded;

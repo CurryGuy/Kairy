@@ -33,6 +33,8 @@ NS_KAIRY_BEGIN
 class DelayTime : public FiniteTimeAction
 {
 public:
+	static std::shared_ptr<DelayTime> create(const Time& time);
+
 	DelayTime(const Time& delay);
 
 private:

@@ -33,6 +33,9 @@ NS_KAIRY_BEGIN
 class MoveTo : public FiniteTimeAction
 {
 public:
+	static std::shared_ptr<MoveTo>
+		create(float duration, const Vec2& position);
+
 	MoveTo(float duration, const Vec2& position);
 
 	virtual void start(Node* target);

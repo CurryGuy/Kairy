@@ -50,6 +50,20 @@ void Sequence::start(Node* target)
 
 //=============================================================================
 
+std::shared_ptr<Sequence> Sequence::create(const std::vector<std::shared_ptr<Action>>& actions)
+{
+	return std::make_shared<Sequence>(actions);
+}
+
+//======================================================================
+
+std::shared_ptr<Sequence> Sequence::create(const std::initializer_list<std::shared_ptr<Action>>& actions)
+{
+	return std::make_shared<Sequence>(actions);
+}
+
+//======================================================================
+
 Sequence::Sequence(const std::initializer_list<std::shared_ptr<Action>>& actions)
 	: Action()
 	, _actions(actions.begin(), actions.end())

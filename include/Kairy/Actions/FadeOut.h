@@ -32,6 +32,8 @@ NS_KAIRY_BEGIN
 class FadeOut : public FiniteTimeAction
 {
 public:
+	static std::shared_ptr<FadeOut> create(float duration);
+
 	FadeOut(float duration);
 
 	virtual void step(float dt) override;

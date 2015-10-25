@@ -15,7 +15,7 @@ public:
 		
 		_dragging = false;
 		
-		_sprite = std::make_shared<Sprite>("assets/Sprite.png");
+		_sprite = Sprite::create("assets/Sprite.png");
 		addChildBot(_sprite);
 		
 		return true;
@@ -53,20 +53,19 @@ int main(int argc, char* argv[])
 {
 	auto device = RenderDevice::getInstance();
 	auto audio = AudioDevice::getInstance();
+	auto sceneManager = SceneManager::getInstance();
 
 	device->init();
 	audio->init();
 
 	device->setQuitOnStart(true);
 
-	std::unique_ptr<Scene> scene(new TestScene());
-
-	SceneManager::getInstance()->changeScene(scene);
+	sceneManager->changeScene(std::make_shared<TestScene>());
 
 	while (device->isRunning())
 	{
-		SceneManager::getInstance()->update(device->getDeltaTime());
-		SceneManager::getInstance()->draw();
+		sceneManager->update(device->getDeltaTime());
+		sceneManager->draw();
 
 		device->swapBuffers();
 	}

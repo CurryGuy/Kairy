@@ -1,4 +1,3 @@
-#include "LineShape.h"
 /******************************************************************************
 *
 * Copyright (C) 2015 Nanni
@@ -31,7 +30,6 @@ inline LineShape::LineShape(float x0, float y0, float x1, float y1, float thickn
 }
 
 //=============================================================================
-
 
 inline LineShape::LineShape(const Vec2& start, const Vec2& end, float thickness)
 	: LineShape()

@@ -28,12 +28,19 @@ NS_KAIRY_BEGIN
 
 //=============================================================================
 
-CallFunction::CallFunction(const std::function<void(float)>& function)
+CallFunction::CallFunction(const Function& function)
 	: _function(function)
 {
 }
 
 //=============================================================================
+
+std::shared_ptr<CallFunction> CallFunction::create(const Function & function)
+{
+	return std::make_shared<CallFunction>(function);
+}
+
+//======================================================================
 
 void CallFunction::update(float dt)
 {

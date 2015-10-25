@@ -33,6 +33,14 @@ NS_KAIRY_BEGIN
 class RectangleShape : public OutlinedShape
 {
 public:
+	static std::shared_ptr<RectangleShape>
+		create(const Rect& rect);
+
+	static std::shared_ptr<RectangleShape>
+		create(const Vec2& size);
+
+	static std::shared_ptr<RectangleShape>
+		create(float x, float y, float width, float height);
 
 	RectangleShape(void);
 

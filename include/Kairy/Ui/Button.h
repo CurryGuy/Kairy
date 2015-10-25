@@ -34,6 +34,15 @@ class Button : public Control
 {
 public:
 
+	static std::shared_ptr<Button>
+		create(void);
+
+	static std::shared_ptr<Button>
+		create(
+			const std::string& normalImage,
+			const std::string& clickedImage = "",
+			const std::string& disabledImage = "");
+
 	Button(void);
 
 	Button(

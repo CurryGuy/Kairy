@@ -47,6 +47,20 @@ void Spawn::start(Node* target)
 
 //=============================================================================
 
+std::shared_ptr<Spawn> Spawn::create(const std::vector<std::shared_ptr<Action>>& actions)
+{
+	return std::make_shared<Spawn>(actions);
+}
+
+//======================================================================
+
+std::shared_ptr<Spawn> Spawn::create(const std::initializer_list<std::shared_ptr<Action>>& actions)
+{
+	return std::make_shared<Spawn>(actions);
+}
+
+//======================================================================
+
 Spawn::Spawn(const std::initializer_list<std::shared_ptr<Action>>& actions)
 	: _actions(actions.begin(), actions.end())
 {

@@ -32,6 +32,11 @@ NS_KAIRY_BEGIN
 class Sequence : public Action
 {
 public:
+	static std::shared_ptr<Sequence>
+		create(const std::vector<std::shared_ptr<Action>>& actions);
+
+	static std::shared_ptr<Sequence>
+		create(const std::initializer_list<std::shared_ptr<Action>>& actions);
 
 	Sequence(const std::vector<std::shared_ptr<Action>>& actions);
 

@@ -32,6 +32,14 @@ NS_KAIRY_BEGIN
 class LineShape : public Shape
 {
 public:
+	static std::shared_ptr<LineShape>
+		create(void);
+
+	static std::shared_ptr<LineShape>
+		create(float x0, float y0, float x1, float y1, float thickness = 1.0f);
+
+	static std::shared_ptr<LineShape>
+		create(const Vec2& start, const Vec2& end, float thickness = 1.0f);
 
 	LineShape(void);
 	

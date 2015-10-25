@@ -10,14 +10,14 @@ class TestScene : public Scene
 public:
 	bool onCreate() override
 	{
-		auto sprite = std::make_shared<Sprite>("assets/Sprite.png");
+		auto sprite = Sprite::create("assets/Sprite.png");
 		
 		sprite->setPosition((getScreenSize(Screen::Top) - sprite->getSize()) / 2.0f);
 		
 		// Create an action that rotates the sprite by 120 degrees in 1 second
-		auto rotateAction = std::make_shared<RotateBy>(1.0f, 120.0f);
+		auto rotateAction = RotateBy::create(1.0f, 120.0f);
 		// Create a RepeatForever action wich will repeat forever the rotation
-		auto repeatForever = std::make_shared<RepeatForever>(rotateAction);
+		auto repeatForever = RepeatForever::create(rotateAction);
 		
 		sprite->runAction(repeatForever);
 		
@@ -34,20 +34,19 @@ int main(int argc, char* argv[])
 {
 	auto device = RenderDevice::getInstance();
 	auto audio = AudioDevice::getInstance();
+	auto sceneManager = SceneManager::getInstance();
 
 	device->init();
 	audio->init();
 
 	device->setQuitOnStart(true);
 
-	std::unique_ptr<Scene> scene(new TestScene());
-
-	SceneManager::getInstance()->changeScene(scene);
+	sceneManager->changeScene(std::make_shared<TestScene>());
 
 	while (device->isRunning())
 	{
-		SceneManager::getInstance()->update(device->getDeltaTime());
-		SceneManager::getInstance()->draw();
+		sceneManager->update(device->getDeltaTime());
+		sceneManager->draw();
 
 		device->swapBuffers();
 	}

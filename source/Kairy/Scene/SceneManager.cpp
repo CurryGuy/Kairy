@@ -54,7 +54,7 @@ SceneManager::~SceneManager()
 
 //=============================================================================
 
-bool SceneManager::changeScene(std::unique_ptr<Scene>& scene)
+bool SceneManager::changeScene(const std::shared_ptr<Scene>& scene)
 {
 	if (!scene)
 		return false;
@@ -63,9 +63,9 @@ bool SceneManager::changeScene(std::unique_ptr<Scene>& scene)
 		return false;
 
 	if (_sceneStack.empty())
-		_sceneStack.push(std::move(scene));
+		_sceneStack.push(scene);
 	else
-		_sceneStack.top() = std::move(scene);
+		_sceneStack.top() = scene;
 
 	return true;
 }
@@ -85,13 +85,13 @@ bool SceneManager::popScene()
 
 //=============================================================================
 
-bool SceneManager::popScene(std::unique_ptr<Scene>& poppedScene)
+bool SceneManager::popScene(std::shared_ptr<Scene>& poppedScene)
 {
 	if (_sceneStack.empty())
 		return false;
 
 	_sceneStack.top()->onDestroy();
-	poppedScene = std::move(_sceneStack.top());
+	poppedScene = _sceneStack.top();
 	_sceneStack.pop();
 
 	return true;
@@ -99,7 +99,7 @@ bool SceneManager::popScene(std::unique_ptr<Scene>& poppedScene)
 
 //=============================================================================
 
-bool SceneManager::pushScene(std::unique_ptr<Scene>& scene)
+bool SceneManager::pushScene(const std::shared_ptr<Scene>& scene)
 {
 	if (!scene)
 		return false;
@@ -107,7 +107,7 @@ bool SceneManager::pushScene(std::unique_ptr<Scene>& scene)
 	if (!scene->onCreate())
 		return false;
 	
-	_sceneStack.push(std::move(scene));
+	_sceneStack.push(scene);
 
 	return true;
 }

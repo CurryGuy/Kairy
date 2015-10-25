@@ -37,6 +37,29 @@ NS_KAIRY_BEGIN
 class Sprite : public Node
 {
 public:
+	static std::shared_ptr<Sprite>
+		create(void);
+
+	static std::shared_ptr<Sprite>
+		create(const byte* buffer, Uint32 buffer_size,
+			Texture::Location location = Texture::Location::Default);
+
+	static std::shared_ptr<Sprite>
+		create(const byte* pixels, int width, int height,
+			Texture::Location location = Texture::Location::Default);
+
+	static std::shared_ptr<Sprite>
+		create(const std::string& filename,
+			Texture::Location location = Texture::Location::Default);
+
+	static std::shared_ptr<Sprite>
+		create(const std::string& zipfile, const std::string& filename,
+			Texture::Location location = Texture::Location::Default);
+
+	static std::shared_ptr<Sprite>
+		create(int width, int height, const Color& color,
+			Texture::Location location = Texture::Location::Default);
+
     /**
      * @brief Default constructor.
      * Constructs an empty sprite. You must load its
@@ -155,6 +178,10 @@ public:
      */
     bool loadTexture(const std::string& filename,
                      Texture::Location location = Texture::Location::Default);
+
+	bool loadTexture(const std::string& zipfile,
+		const std::string& filename,
+		Texture::Location location = Texture::Location::Default);
 
     /**
      * @brief Load the texture of the sprite from the given
