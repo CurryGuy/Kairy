@@ -106,7 +106,7 @@ bool Image::load(const std::string& filename)
     int width = 0;
     int height = 0;
     byte* pixels = ImageLoader::LoadFromFile(filename, width, height,
-            ImageLoader::PixelFormat::RGBA8);
+            PixelFormat::RGBA8);
 
     bool ret = load(pixels, width, height);
     ImageLoader::FreeImage(pixels);
@@ -132,7 +132,7 @@ bool Image::load(const byte* buffer, Uint32 bufferSize)
     int width = 0;
     int height = 0;
     byte* pixels = ImageLoader::LoadFromMemory(buffer, bufferSize,
-            width, height, ImageLoader::PixelFormat::RGBA8);
+            width, height, PixelFormat::RGBA8);
 
     bool ret = load(pixels, width, height);
     ImageLoader::FreeImage(pixels);
@@ -241,7 +241,7 @@ bool Image::save(const std::string& filename, ImageFormat format, const Color& t
     return ImageLoader::SaveToFile(filename, format,
             (byte*)&pixels.front(),
             _width, _height,
-            ImageLoader::PixelFormat::RGBA8);
+            PixelFormat::RGBA8);
 }
 
 //=============================================================================
@@ -268,7 +268,7 @@ bool Image::save(std::vector<byte>& outBuffer, ImageFormat format, const Color& 
     return ImageLoader::SaveToMemory(outBuffer, format,
             (byte*)&pixels.front(),
             _width, _height,
-            ImageLoader::PixelFormat::RGBA8);
+            PixelFormat::RGBA8);
 }
 
 //=============================================================================

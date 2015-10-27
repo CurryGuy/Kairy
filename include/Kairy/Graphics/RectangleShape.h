@@ -34,6 +34,9 @@ class RectangleShape : public OutlinedShape
 {
 public:
 	static std::shared_ptr<RectangleShape>
+		create(void);
+
+	static std::shared_ptr<RectangleShape>
 		create(const Rect& rect);
 
 	static std::shared_ptr<RectangleShape>

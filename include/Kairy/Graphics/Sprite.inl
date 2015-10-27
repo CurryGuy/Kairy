@@ -31,6 +31,13 @@ inline Texture& Sprite::getTexture()
 
 //=============================================================================
 
+inline void Sprite::setTexture(const Texture & texture)
+{
+	_texture = texture;
+}
+
+//=============================================================================
+
 inline int Sprite::getTextureWidth() const
 {
     return _texture.getWidth();

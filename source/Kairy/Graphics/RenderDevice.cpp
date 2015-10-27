@@ -662,7 +662,7 @@ bool RenderDevice::takeScreenshot(const std::string& filename,
     return ImageLoader::SaveToFile(filename, format,
             (byte*)&pixels.front(),
             width, height,
-            ImageLoader::PixelFormat::RGBA8);
+            PixelFormat::RGBA8);
 }
 
 //=============================================================================

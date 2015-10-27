@@ -55,11 +55,12 @@ std::shared_ptr<Sprite> Sprite::create(const byte * buffer, Uint32 buffer_size, 
 
 //=============================================================================
 
-std::shared_ptr<Sprite> Sprite::create(const byte * pixels, int width, int height, Texture::Location location)
+std::shared_ptr<Sprite> Sprite::create(const byte * pixels, int width, int height,
+	PixelFormat format, Texture::Location location)
 {
 	auto sprite = std::make_shared<Sprite>();
 
-	if (!sprite || !sprite->loadTexture(pixels, width, height, location))
+	if (!sprite || !sprite->loadTexture(pixels, width, height, format, location))
 	{
 		return nullptr;
 	}
@@ -128,9 +129,10 @@ Sprite::Sprite(const byte* buffer, Uint32 buffer_size, Texture::Location locatio
 
 //=============================================================================
 
-Sprite::Sprite(const byte* pixels, int width, int height, Texture::Location location)
+Sprite::Sprite(const byte* pixels, int width, int height,
+	PixelFormat format, Texture::Location location)
 {
-	_texture.load(pixels, width, height, location);
+	_texture.load(pixels, width, height, format, location);
 
 	init();
 }
@@ -301,9 +303,10 @@ bool Sprite::loadTexture(const std::string & zipfile, const std::string & filena
 
 //=============================================================================
 
-bool Sprite::loadTexture(const byte* pixels, int width, int height, Texture::Location location)
+bool Sprite::loadTexture(const byte* pixels, int width, int height,
+	PixelFormat format, Texture::Location location)
 {
-	bool ret = _texture.load(pixels, width, height, location);
+	bool ret = _texture.load(pixels, width, height, format, location);
 	updateTextureRect();
 	return ret;
 }

@@ -46,6 +46,7 @@ public:
 
 	static std::shared_ptr<Sprite>
 		create(const byte* pixels, int width, int height,
+			PixelFormat format = PixelFormat::RGBA8,
 			Texture::Location location = Texture::Location::Default);
 
 	static std::shared_ptr<Sprite>
@@ -86,7 +87,8 @@ public:
      * @param location Where the pixels of the texture will be allocated.
      */
     Sprite(const byte* pixels, int width, int height,
-           Texture::Location location = Texture::Location::Default);
+		PixelFormat format = PixelFormat::RGBA8,
+		Texture::Location location = Texture::Location::Default);
 
     /**
      * @brief Constructs a sprite loading its texture from
@@ -121,6 +123,12 @@ public:
      * @return A reference to the texture of the sprite.
      */
     inline Texture& getTexture();
+
+	/**
+	 * @brief Set the texture of the sprite.
+	 * @param texture The new texture.
+	 */
+	inline void setTexture(const Texture& texture);
 
     /**
      * @brief Get the width of the texture.
@@ -193,7 +201,8 @@ public:
      * @return false if an error occurred.
      */
     bool loadTexture(const byte* pixels, int width, int height,
-                     Texture::Location location = Texture::Location::Default);
+		PixelFormat format = PixelFormat::RGBA8,
+		Texture::Location location = Texture::Location::Default);
 
     /**
      * @brief Load the texture of the sprite from the given

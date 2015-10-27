@@ -39,8 +39,8 @@ public:
 		Moved
 	};
 
-	typedef std::function<void(const Vec2&, TouchType)> TouchCallback;
-	typedef std::function<void(float)> ClickCallback;
+	using TouchCallback = std::function<void(const Vec2&, TouchType)>;
+	using ClickCallback = std::function<void(float)>;
 
 	Control(void);
 

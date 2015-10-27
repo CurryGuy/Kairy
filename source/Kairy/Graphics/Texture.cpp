@@ -94,7 +94,7 @@ bool Texture::preload(const std::string & filename, Location location)
 {
 	int width = 0;
 	int height = 0;
-	byte* loadedPixels = ImageLoader::LoadFromFile(filename, width, height, ImageLoader::PixelFormat::RGBA8);
+	byte* loadedPixels = ImageLoader::LoadFromFile(filename, width, height, PixelFormat::RGBA8);
 
 	if (!loadedPixels || width == 0 || height == 0)
 	{
@@ -188,17 +188,18 @@ Texture::Texture(const std::string & zipfile, const std::string & filename,
 //=============================================================================
 
 Texture::Texture(const byte* buffer, Uint32 buffer_size, Location location)
-	:Texture()
+	: Texture()
 {
 	load(buffer, buffer_size, location);
 }
 
 //=============================================================================
 
-Texture::Texture(const byte* pixels, int width, int height, Location location)
-	:Texture()
+Texture::Texture(const byte* pixels, int width, int height,
+	PixelFormat format, Location location)
+	: Texture()
 {
-	load(pixels, width, height, location);
+	load(pixels, width, height, format, location);
 }
 
 //=============================================================================
@@ -262,8 +263,8 @@ bool Texture::load(const std::string& filename, Location location)
 	int width = 0;
 	int height = 0;
 	byte* pixels = ImageLoader::LoadFromFile(filename, width, height,
-		ImageLoader::PixelFormat::RGBA8);
-	bool ret = loadPixels(pixels, width, height, location);
+		PixelFormat::RGBA8);
+	bool ret = loadPixels(pixels, width, height, PixelFormat::RGBA8, location);
 	ImageLoader::FreeImage(pixels);
 
 	if (ret)
@@ -296,9 +297,9 @@ bool Texture::load(const byte* buffer, Uint32 buffer_size, Location location)
 {
 	int width, height;
 	byte* pixels = ImageLoader::LoadFromMemory(buffer, buffer_size, width,
-		height, ImageLoader::PixelFormat::RGBA8);
+		height, PixelFormat::RGBA8);
 
-	bool ret = load(pixels, width, height, location);
+	bool ret = load(pixels, width, height, PixelFormat::RGBA8, location);
 	ImageLoader::FreeImage(pixels);
 
 	return ret;
@@ -306,7 +307,8 @@ bool Texture::load(const byte* buffer, Uint32 buffer_size, Location location)
 
 //=============================================================================
 
-bool Texture::load(const byte* pixels, int width, int height, Location location)
+bool Texture::load(const byte* pixels, int width, int height,
+	PixelFormat format, Location location)
 {
 	if (!pixels || width == 0 || height == 0 ||
 		!RenderDevice::getInstance()->isInitialized())
@@ -314,7 +316,7 @@ bool Texture::load(const byte* pixels, int width, int height, Location location)
 		return false;
 	}
 
-	bool ret = loadPixels(pixels, width, height, location);
+	bool ret = loadPixels(pixels, width, height, format, location);
 
 	if (ret)
 	{
@@ -332,7 +334,7 @@ bool Texture::load(const byte* pixels, int width, int height, Location location)
 bool Texture::create(int width, int height, const Color& color, Location location)
 {
 	std::vector<Color> pixels(width * height, color);
-	return load((byte*)&pixels.front(), width, height, location);
+	return load((byte*)&pixels.front(), width, height, PixelFormat::RGBA8, location);
 }
 
 //=============================================================================
@@ -410,7 +412,7 @@ bool Texture::save(const std::string& filename, ImageFormat format, const Color&
 	return ImageLoader::SaveToFile(filename, format,
 		(byte*)&pixels.front(),
 		_width, _height,
-		ImageLoader::PixelFormat::RGBA8);
+		PixelFormat::RGBA8);
 }
 
 //=============================================================================
@@ -474,7 +476,7 @@ bool Texture::save(std::vector<byte>& outBuffer,
 	return ImageLoader::SaveToMemory(outBuffer, format,
 		(byte*)&pixels.front(),
 		_width, _height,
-		ImageLoader::PixelFormat::RGBA8);
+		PixelFormat::RGBA8);
 }
 
 //=============================================================================
@@ -560,7 +562,7 @@ bool Texture::scaleHq2x(void)
 
 	pixels.clear();
 
-	return load((byte*)&outPixels.front(), newWidth, newHeight, location);
+	return load((byte*)&outPixels.front(), newWidth, newHeight, PixelFormat::RGBA8, location);
 }
 
 //=============================================================================
@@ -587,7 +589,7 @@ bool Texture::scaleHq3x(void)
 
 	pixels.clear();
 
-	return load((byte*)&outPixels.front(), newWidth, newHeight, location);
+	return load((byte*)&outPixels.front(), newWidth, newHeight, PixelFormat::RGBA8, location);
 }
 
 //=============================================================================
@@ -614,7 +616,7 @@ bool Texture::scaleHq4x(void)
 
 	pixels.clear();
 
-	return load((byte*)&outPixels.front(), newWidth, newHeight, location);
+	return load((byte*)&outPixels.front(), newWidth, newHeight, PixelFormat::RGBA8, location);
 }
 
 //=============================================================================
@@ -815,7 +817,8 @@ Texture::ResourceData Texture::createResourceData()
 
 //=============================================================================
 
-bool Texture::loadPixels(const byte * pixels, int width, int height, Location location)
+bool Texture::loadPixels(const byte * pixels, int width, int height,
+	PixelFormat format, Location location)
 {
 	int potWidth = util::clamp<int>(util::npot(width), MIN_SIZE, MAX_SIZE);
 	int potHeight = util::clamp<int>(util::npot(height), MIN_SIZE, MAX_SIZE);
@@ -876,12 +879,14 @@ bool Texture::loadPixels(const byte * pixels, int width, int height, Location lo
 				_pixels[dst_index * 4 + 3] = pixels[src_index * 4 + 0];
 				_pixels[dst_index * 4 + 2] = pixels[src_index * 4 + 1];
 				_pixels[dst_index * 4 + 1] = pixels[src_index * 4 + 2];
-				_pixels[dst_index * 4 + 0] = pixels[src_index * 4 + 3];
+				_pixels[dst_index * 4 + 0] = format == PixelFormat::RGBA8 ?
+					pixels[src_index * 4 + 3] : 0xFF;
 #else
 				_pixels[dst_index * 4 + 0] = pixels[src_index * 4 + 0];
 				_pixels[dst_index * 4 + 1] = pixels[src_index * 4 + 1];
 				_pixels[dst_index * 4 + 2] = pixels[src_index * 4 + 2];
-				_pixels[dst_index * 4 + 3] = pixels[src_index * 4 + 3];
+				_pixels[dst_index * 4 + 3] = format == PixelFormat::RGBA8 ?
+					pixels[src_index * 4 + 3] : 0xFF;
 #endif // _3DS
 			}
 			else

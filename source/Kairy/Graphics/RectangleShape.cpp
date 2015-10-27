@@ -34,6 +34,13 @@ NS_KAIRY_BEGIN
 
 //=============================================================================
 
+std::shared_ptr<RectangleShape> RectangleShape::create(void)
+{
+	return std::make_shared<RectangleShape>();
+}
+
+//=============================================================================
+
 inline std::shared_ptr<RectangleShape> RectangleShape::create(const Rect & rect)
 {
 	return std::make_shared<RectangleShape>(rect);

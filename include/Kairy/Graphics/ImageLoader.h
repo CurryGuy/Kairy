@@ -32,12 +32,6 @@ NS_KAIRY_BEGIN
 class ImageLoader
 {
 public:
-    enum class PixelFormat
-    {
-        RGB8,
-        RGBA8
-    };
-
     static byte* LoadFromFile(const std::string& filename,
             int& outWidth, int& outHeight,
             PixelFormat format);

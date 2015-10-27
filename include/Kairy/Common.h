@@ -107,15 +107,21 @@ enum class ImageFormat
     Jpg
 };
 
-typedef signed char Int8;
-typedef unsigned char Uint8;
-typedef signed short Int16;
-typedef unsigned short Uint16;
-typedef signed int Int32;
-typedef unsigned int Uint32;
-typedef signed long long Int64;
-typedef unsigned long long Uint64;
-typedef unsigned char byte;
+enum class PixelFormat
+{
+	RGB8,
+	RGBA8
+};
+
+using Int8 = signed char;
+using Uint8 =  unsigned char;
+using Int16 = signed short;
+using Uint16 = unsigned short;
+using Int32 =  signed int;
+using Uint32 = unsigned int;
+using Int64 =  signed long long;
+using Uint64 =  unsigned long long;
+using byte = unsigned char;
 
 NS_KAIRY_END
 

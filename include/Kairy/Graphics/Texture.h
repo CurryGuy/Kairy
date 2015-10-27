@@ -121,9 +121,12 @@ public:
 	 * @param pixels The pixels to load to the texture.
 	 * @param width The texture width.
 	 * @param height The texture height.
+	 * @param format The pixel format.
 	 * @param location Where the texture will be allocated.
 	 */
-	Texture(const byte* pixels, int width, int height, Location location = Location::Default);
+	Texture(const byte* pixels, int width, int height,
+		PixelFormat format = PixelFormat::RGBA8,
+		Location location = Location::Default);
 
 	/**
 	 * @brief Constructs a rectangular texture with the specified
@@ -166,10 +169,13 @@ public:
 	 * @param pixels The RGBA8 texture pixels.
 	 * @param width The texture width.
 	 * @param height The texture height.
+	 * @param format The pixel format.
 	 * @param location Where the texture will be allocated.
 	 * @return false if an error occurred.
 	 */
-	bool load(const byte* pixels, int width, int height, Location location = Location::Default);
+	bool load(const byte* pixels, int width, int height,
+		PixelFormat format = PixelFormat::RGBA8,
+		Location location = Location::Default);
 
 	/**
 	 * @brief Create a rectangular texture with the specified dimensions
@@ -359,7 +365,8 @@ private:
 	static Uint32 s_memResCounter;
 
 protected:
-	bool loadPixels(const byte* pixels, int width, int height, Location location);
+	bool loadPixels(const byte* pixels, int width, int height,
+		PixelFormat format, Location location);
 
 	static Texture* s_bindedTexture; ///< The currently binded texture
 	static bool s_defaultAaEnabled; ///< If the antialiasing is enabled by default
