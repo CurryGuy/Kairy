@@ -45,11 +45,20 @@ public:
 
     static bool getFiles(const std::string& dir, std::vector<std::string>& outFiles);
 
+	static bool copy(const std::string& src, const std::string& dst);
+
     static bool move(const std::string& src, const std::string& dst);
 
+	static bool rename(const std::string& oldDir, const std::string& newDir);
+
+	Directory(void) = delete;
+    Directory(const Directory&) = delete;
+
 private:
-    Directory(void) = default;
-    Directory(const Directory&) = default;
+#ifdef _3DS
+	static void openSdArchive();
+	static void closeSdArchive();
+#endif // _3DS
 };
 
 NS_KAIRY_END

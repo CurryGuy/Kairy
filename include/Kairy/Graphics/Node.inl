@@ -57,6 +57,39 @@ inline void Node::setPositionY(float y)
 
 //=============================================================================
 
+inline void Node::offsetPosition(const Vec2 & position)
+{
+	_position += position;
+	_transformUpdated = true;
+}
+
+//=============================================================================
+
+inline void Node::offsetPosition(float x, float y)
+{
+	_position.x += x;
+	_position.y += y;
+	_transformUpdated = true;
+}
+
+//=============================================================================
+
+inline void Node::offsetPositionX(float amount)
+{
+	_position.x += amount;
+	_transformUpdated = true;
+}
+
+//=============================================================================
+
+inline void Node::offsetPositionY(float amount)
+{
+	_position.y += amount;
+	_transformUpdated = true;
+}
+
+//=============================================================================
+
 inline Vec2 Node::getPosition() const
 {
 	return _position;

@@ -78,13 +78,9 @@ public:
 
 	inline void setChildsLayer(int index) { _childsLayer = index; }
 
-	inline void setViewSize(const Vec2& size) { _viewSize = size; }
+	Rect& getCamera() { return _camera; }
 
-	inline Vec2 getViewSize() const { return _viewSize; }
-
-	Rect getCamera() const;
-
-	void setCamera(const Rect& camera);
+	void setCamera(const Rect& camera) { _camera = camera; }
 
 protected:
     struct Tile
@@ -127,7 +123,7 @@ protected:
     int _mapWidth;
     int _mapHeight;
 	int _childsLayer;
-	Vec2 _viewSize;
+	Rect _camera;
     Uint16 _tileWidth;
     Uint16 _tileHeight;
     bool _loaded;

@@ -99,16 +99,14 @@ void TmxMapRenderer::draw(int layerIndex)
 
 	updateTransform();
 
-	auto camera = getCamera();
-
 	if (_color.a > 0 && _type == TmxMap::Orientation::Orthogonal)
 	{
-		int startX = int(camera.x) / _tileWidth;
-		int startY = int(camera.y) / _tileHeight;
-		int offsX = int(camera.x) % _tileWidth;
-		int offsY = int(camera.y) % _tileHeight;
-		int width = int(camera.width) / _tileWidth + 1 + (offsX ? 1 : 0);
-		int height = int(camera.height) / _tileHeight + 1 + (offsY ? 1 : 0);
+		int startX = int(_camera.x) / _tileWidth;
+		int startY = int(_camera.y) / _tileHeight;
+		int offsX = int(_camera.x) % _tileWidth;
+		int offsY = int(_camera.y) % _tileHeight;
+		int width = int(_camera.width) / _tileWidth + 1 + (offsX ? 1 : 0);
+		int height = int(_camera.height) / _tileHeight + 1 + (offsY ? 1 : 0);
 
 		Layer& layer = _layers[layerIndex];
 
@@ -139,8 +137,8 @@ void TmxMapRenderer::draw(int layerIndex)
 					int srcX = (id % (tileset->columns - tileset->margin * 2 + tileset->spacing)) * tileset->tileWidth;
 					int srcY = (id / (tileset->columns - tileset->margin * 2 + tileset->spacing)) * tileset->tileHeight;
 
-					float screenX = float(x * _tileWidth - offsX);
-					float screenY = float(y * _tileHeight - offsY);
+					float screenX = float(x * _tileWidth);
+					float screenY = float(y * _tileHeight);
 
 					auto& sprite = tileset->sprite;
 
@@ -157,7 +155,6 @@ void TmxMapRenderer::draw(int layerIndex)
 				}
 			}
 		}
-
 	} /* _color.a > 0 */
 
 	if (layerIndex == _childsLayer)
@@ -343,21 +340,6 @@ bool TmxMapRenderer::setMap(const TmxMap& map, Texture::Location location)
 	_loaded = true;
 
 	return true;
-}
-
-//=============================================================================
-
-Rect TmxMapRenderer::getCamera() const
-{
-	return Rect(_position, _viewSize);
-}
-
-//=============================================================================
-
-void TmxMapRenderer::setCamera(const Rect & camera)
-{
-	setPosition(camera.getOrigin());
-	_viewSize = camera.getSize();
 }
 
 //=============================================================================

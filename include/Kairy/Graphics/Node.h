@@ -52,6 +52,14 @@ public:
 
 	inline void setPositionY(float y);
 
+	inline void offsetPosition(const Vec2& position);
+
+	inline void offsetPosition(float x, float y);
+
+	inline void offsetPositionX(float amount);
+
+	inline void offsetPositionY(float amount);
+
 	inline Vec2 getPosition() const;
 
 	inline float getPositionX() const;
