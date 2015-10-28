@@ -26,7 +26,7 @@
 #define KAIRY_SYSTEM_H_INCLUDED
 
 #include "System/InputManager.h"
-#include "System/Directory.h"
+#include "System/FileIo.h"
 #include "System/Random.h"
 #include "System/Thread.h"
 #include "System/Time.h"
