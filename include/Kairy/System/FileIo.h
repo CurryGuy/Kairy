@@ -22,60 +22,42 @@
  *
  *****************************************************************************/
 
-#include <Kairy/System/Directory.h>
-#ifdef _3DS
-#include <unistd.h>
-#endif // _3DS
+#ifndef KAIRY_SYSTEM_FILEIO_H_INCLUDED
+#define KAIRY_SYSTEM_FILEIO_H_INCLUDED
+
+#include <Kairy/Common.h>
 
 NS_KAIRY_BEGIN
 
-//=============================================================================
-
-bool Directory::createDirectory(const std::string& dir)
+class FileIo
 {
-#ifdef _3DS
-    FS_archive sdmc_archive;
-    sdmc_archive.id = ARCH_SDMC;
-    sdmc_archive.lowPath = (FS_path)
-    {
-        PATH_EMPTY, 1, (u8*)""
-    };
+public:
 
-    std::vector<std::string> levels;
-    std::string::size_type index = 0;
+    static void openSdArchive();
 
-    do
-    {
-        index = dir.find_first_of("\\/", index + 1);
-        auto end = (index == std::string::npos) ? dir.length() : index;
-        levels.push_back(dir.substr(0, end));
-    }
-    while(index != std::string::npos);
+    static void closeSdArchive();
 
-    FSUSER_OpenArchive(nullptr, &sdmc_archive);
+    static bool createDirectory(const std::string& dir);
 
-    for(auto& level : levels)
-    {
-        FSUSER_CreateDirectory(nullptr, sdmc_archive, FS_makePath(PATH_CHAR, level.c_str()));
-    }
+    static bool deleteDirectory(const std::string& dir);
 
-    FSUSER_CloseArchive(nullptr, &sdmc_archive);
-#endif // _3DS
+    static bool deleteFile(const std::string& file);
 
-    return true;
-}
+    static bool exists(const std::string& path);
 
-//=============================================================================
+    static bool getFiles(const std::string& dir, std::vector<std::string>& outFiles);
 
-std::string Directory::getCurrentDirectory()
-{
-    char buffer[512];
-#ifdef _3DS
-    getcwd(buffer, 512);
-#endif // _3DS
-    return std::string(buffer);
-}
+    static bool move(const std::string& src, const std::string& dst);
 
-//=============================================================================
+    static std::string getCurrentDirectory();
+
+    static bool setCurrentDirectory(const std::string& dir);
+
+private:
+    FileIo(void) = default;
+    FileIo(const FileIo&) = default;
+};
 
 NS_KAIRY_END
+
+#endif // KAIRY_SYSTEM_DIRECTORY_H_INCLUDED
