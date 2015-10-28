@@ -55,7 +55,7 @@ public:
 		const std::string& clickedImage = "",
 		const std::string& disabledImage = "");
 
-	virtual void onTouchDown(const Vec2& position, float dt) override;
+	virtual bool onTouchDown(const Vec2& position, float dt) override;
 	virtual void onTouchUp(const Vec2& position, float dt) override;
 
 	virtual void setEnabled(bool enabled) override;

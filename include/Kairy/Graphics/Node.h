@@ -38,6 +38,8 @@ class Node : public Updatable, public Drawable
 {
 public:
 
+	using TouchCallback = std::function<void(const Vec2&, TouchType)>;
+
 	Node(void);
 
 	virtual ~Node(void);
@@ -181,11 +183,17 @@ public:
 
 	virtual void update(float dt) override;
 
-	virtual void onTouchDown(const Vec2& position, float dt) {};
+	inline bool isTouchEnabled() const { return _touchEnabled; }
 
-	virtual void onTouchUp(const Vec2& position, float dt) {};
+	inline void setTouchEnabled(bool enabled) { _touchEnabled = enabled; }
 
-	virtual void onTouchMoved(const Vec2& position, float dt) {};
+	virtual bool onTouchDown(const Vec2& position, float dt);
+
+	virtual void onTouchUp(const Vec2& position, float dt);
+
+	virtual void onTouchMoved(const Vec2& position, float dt);
+
+	void setTouchCallback(const TouchCallback& callback);
 
 	virtual void runAction(const std::shared_ptr<Action>& action);
 
@@ -234,6 +242,9 @@ protected:
 	std::vector<std::shared_ptr<Node>> _children;
 	std::vector<std::shared_ptr<Action>> _actions;
 	std::vector<Uint32> _actionsDone;
+
+	bool _touchEnabled;
+	TouchCallback _touchCallback;
 
 #ifndef _3DS
 	GLuint _vao;

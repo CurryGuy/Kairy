@@ -45,6 +45,8 @@ Node::Node()
 	, _addCounter(0)
 	, _parent(nullptr)
 	, _scene(nullptr)
+	, _touchEnabled(false)
+	, _touchCallback(nullptr)
 #ifndef _3DS
 	, _vao(0)
 	, _vbo(0)
@@ -268,6 +270,64 @@ void Node::update(float dt)
 	{
 		child->update(dt);
 	}
+}
+
+//=============================================================================
+
+bool Node::onTouchDown(const Vec2 & position, float dt)
+{
+	if (_touchEnabled)
+	{
+		bool touched = getBoundingBox().containsPoint(position);
+
+		if (touched)
+		{
+			if (_touchCallback)
+				_touchCallback(position, TouchType::Down);
+
+			for (auto& child : _children)
+			{
+				child->onTouchDown(position, dt);
+			}
+		}
+
+		return touched;
+	}
+
+	return false;
+}
+
+//=============================================================================
+
+void Node::onTouchUp(const Vec2 & position, float dt)
+{
+	if (_touchCallback)
+		_touchCallback(position, TouchType::Up);
+
+	for (auto& child : _children)
+	{
+		child->onTouchUp(position, dt);
+	}
+}
+
+//=============================================================================
+
+void Node::onTouchMoved(const Vec2 & position, float dt)
+{
+	if (_touchCallback)
+		_touchCallback(position, TouchType::Moved);
+
+	for (auto& child : _children)
+	{
+		child->onTouchMoved(position, dt);
+	}
+}
+
+//=============================================================================
+
+void Node::setTouchCallback(const TouchCallback & callback)
+{
+	_touchCallback = callback;
 }
 
 //=============================================================================

@@ -37,10 +37,16 @@ public:
 		create(void);
 
 	static std::shared_ptr<Text>
+		create(float size);
+
+	static std::shared_ptr<Text>
 		create(const std::string& filename);
 
 	static std::shared_ptr<Text>
 		create(const std::string& filename, float size);
+
+	static std::shared_ptr<Text>
+		createTTF(float size);
 
 	static std::shared_ptr<Text>
 		createTTF(const std::string& filename, float size);

@@ -32,19 +32,9 @@ NS_KAIRY_BEGIN
 class Control : public Node
 {
 public:
-	enum class TouchType
-	{
-		Down,
-		Up,
-		Moved
-	};
-
-	using TouchCallback = std::function<void(const Vec2&, TouchType)>;
 	using ClickCallback = std::function<void(float)>;
 
 	Control(void);
-
-	void setTouchCallback(const TouchCallback& callback);
 
 	void setClickCallback(const ClickCallback& callback);
 
@@ -52,11 +42,7 @@ public:
 	
 	virtual bool isEnabled() const;
 
-	virtual void setTouchEnabled(bool enabled);
-
-	virtual bool isTouchEnabled() const;
-
-	virtual void onTouchDown(const Vec2& position, float dt) override;
+	virtual bool onTouchDown(const Vec2& position, float dt) override;
 
 	virtual void onTouchUp(const Vec2& position, float dt) override;
 
@@ -64,10 +50,8 @@ public:
 
 protected:
 	bool _enabled;
-	bool _touchEnabled;
 	bool _touched;
 
-	TouchCallback _touchCallback;
 	ClickCallback _clickCallback;
 };
 

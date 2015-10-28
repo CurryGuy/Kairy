@@ -36,6 +36,20 @@ std::shared_ptr<Text> Text::create(void)
 
 //=============================================================================
 
+std::shared_ptr<Text> Text::create(float size)
+{
+	auto text = std::make_shared<Text>();
+
+	if (!text || !text->loadFont(size))
+	{
+		return nullptr;
+	}
+
+	return text;
+}
+
+//=============================================================================
+
 std::shared_ptr<Text> Text::create(const std::string & filename)
 {
 	auto text = std::make_shared<Text>();
@@ -55,6 +69,20 @@ std::shared_ptr<Text> Text::create(const std::string & filename, float size)
 	auto text = std::make_shared<Text>();
 
 	if (!text || !text->loadFont(filename, size))
+	{
+		return nullptr;
+	}
+
+	return text;
+}
+
+//=============================================================================
+
+std::shared_ptr<Text> Text::createTTF(float size)
+{
+	auto text = std::make_shared<Text>();
+
+	if (!text || !text->loadFont(size))
 	{
 		return nullptr;
 	}

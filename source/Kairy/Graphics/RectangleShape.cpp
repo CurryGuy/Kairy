@@ -41,21 +41,21 @@ std::shared_ptr<RectangleShape> RectangleShape::create(void)
 
 //=============================================================================
 
-inline std::shared_ptr<RectangleShape> RectangleShape::create(const Rect & rect)
+std::shared_ptr<RectangleShape> RectangleShape::create(const Rect & rect)
 {
 	return std::make_shared<RectangleShape>(rect);
 }
 
 //=============================================================================
 
-inline std::shared_ptr<RectangleShape> RectangleShape::create(const Vec2 & size)
+std::shared_ptr<RectangleShape> RectangleShape::create(const Vec2 & size)
 {
 	return std::make_shared<RectangleShape>(size);
 }
 
 //=============================================================================
 
-inline std::shared_ptr<RectangleShape> RectangleShape::create(float x, float y, float width, float height)
+std::shared_ptr<RectangleShape> RectangleShape::create(float x, float y, float width, float height)
 {
 	return std::make_shared<RectangleShape>(x, y, width, height);
 }

@@ -38,9 +38,12 @@ inline void Text::setColor(const Color& color)
 
 inline Text& Text::setString(const std::string& str)
 {
-    _str = str;
-	setSize(measureString(str));
-	updateCharacters();
+	if (str != _str)
+	{
+		_str = str;
+		setSize(measureString(str));
+		updateCharacters();
+	}
 
     return *this;
 }
@@ -57,6 +60,7 @@ inline std::string Text::getString() const
 inline Text& Text::setLineWidth(int width)
 {
     _lineWidth = width;
+	updateCharacters();
     return *this;
 }
 

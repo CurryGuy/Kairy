@@ -11,7 +11,10 @@ std::shared_ptr<CheckBox> CheckBox::create(void)
 
 //=============================================================================
 
-std::shared_ptr<CheckBox> CheckBox::create(const std::string & uncheckedImage, const std::string & checkedImage, const std::string & disabledImage)
+std::shared_ptr<CheckBox> CheckBox::create(
+	const std::string & uncheckedImage,
+	const std::string & checkedImage,
+	const std::string & disabledImage)
 {
 	auto cb = std::make_shared<CheckBox>();
 
@@ -100,9 +103,9 @@ bool CheckBox::setImages(
 
 //=============================================================================
 
-void CheckBox::onTouchDown(const Vec2 & position, float dt)
+bool CheckBox::onTouchDown(const Vec2 & position, float dt)
 {
-	Control::onTouchDown(position, dt);
+	bool ret = Control::onTouchDown(position, dt);
 
 	if (_touched)
 	{
@@ -111,6 +114,8 @@ void CheckBox::onTouchDown(const Vec2 & position, float dt)
 		if (_checkCallback)
 			_checkCallback(isChecked());
 	}
+
+	return ret;
 }
 
 //=============================================================================

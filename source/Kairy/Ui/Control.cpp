@@ -31,18 +31,10 @@ NS_KAIRY_BEGIN
 Control::Control()
 	: Node()
 	, _enabled(true)
-	, _touchEnabled(true)
 	, _touched(false)
-	, _touchCallback(nullptr)
 	, _clickCallback(nullptr)
 {
-}
-
-//=============================================================================
-
-void Control::setTouchCallback(const TouchCallback& callback)
-{
-	_touchCallback = callback;
+	setTouchEnabled(true);
 }
 
 //=============================================================================
@@ -68,51 +60,33 @@ bool Control::isEnabled() const
 
 //=============================================================================
 
-void Control::setTouchEnabled(bool enabled)
+bool Control::onTouchDown(const Vec2& position, float dt)
 {
-	_touchEnabled = enabled;
-}
+	bool ret = Node::onTouchDown(position, dt);
 
-//=============================================================================
-
-bool Control::isTouchEnabled() const
-{
-	return _touchEnabled;
-}
-
-//=============================================================================
-
-void Control::onTouchDown(const Vec2& position, float dt)
-{
-	if (_touchEnabled && _enabled &&
-		getBoundingBox().containsPoint(position))
+	if (_enabled && ret)
 	{
 		_touched = true;
-
-		if (_touchCallback)
-			_touchCallback(position, TouchType::Down);
 	}
+
+	return ret;
 }
 
 //=============================================================================
 
 void Control::onTouchUp(const Vec2& position, float dt)
 {
-	if (_touchEnabled && _enabled)
-	{
-		if (_touched)
-		{
-			if (getBoundingBox().containsPoint(position))
-			{
-				if (_clickCallback)
-					_clickCallback(dt);
-			}
+	Node::onTouchUp(position, dt);
 
-			_touched = false;
+	if (_enabled && _touched)
+	{
+		if (getBoundingBox().containsPoint(position))
+		{
+			if (_clickCallback)
+				_clickCallback(dt);
 		}
 
-		if (_touchCallback)
-			_touchCallback(position, TouchType::Up);
+		_touched = false;
 	}
 }
 
@@ -120,11 +94,7 @@ void Control::onTouchUp(const Vec2& position, float dt)
 
 void Control::onTouchMoved(const Vec2& position, float dt)
 {
-	if (_touchEnabled && _enabled)
-	{
-		if (_touchCallback)
-			_touchCallback(position, TouchType::Moved);
-	}
+	Node::onTouchMoved(position, dt);
 }
 
 //=============================================================================

@@ -113,6 +113,13 @@ enum class PixelFormat
 	RGBA8
 };
 
+enum class TouchType
+{
+	Down,
+	Up,
+	Moved
+};
+
 using Int8 = signed char;
 using Uint8 =  unsigned char;
 using Int16 = signed short;

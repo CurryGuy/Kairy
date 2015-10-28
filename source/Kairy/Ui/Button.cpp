@@ -126,15 +126,17 @@ bool Button::setImages(
 
 //=============================================================================
 
-void Button::onTouchDown(const Vec2 & position, float dt)
+bool Button::onTouchDown(const Vec2 & position, float dt)
 {
-	Control::onTouchDown(position, dt);
+	bool ret = Control::onTouchDown(position, dt);
 
 	if (_touched)
 	{
 		_normalImage->setVisible(false);
 		_clickedImage->setVisible(true);
 	}
+
+	return ret;
 }
 
 //=============================================================================
