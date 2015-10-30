@@ -81,13 +81,8 @@ void Node::updateTransform()
 	{
 		auto centerInPixels = _center * _size;
 
-		auto translation = Transform::createTranslation(_position);
-		auto scale = Transform::createScale(_scaleX, _scaleY);
-		auto rotation = Transform::createTranslation(centerInPixels) *
-			Transform::createRotation(util::deg_to_rad(_angle)) *
-			Transform::createTranslation(-centerInPixels);
-		auto skew = Transform::createSkewX(util::deg_to_rad(_skewX)) *
-			Transform::createSkewY(util::deg_to_rad(_skewY));
+		auto&& translation = Transform::createTranslation(_position);
+		auto&& scale = Transform::createScale(_scaleX, _scaleY);
 
 		if (_flipX)
 			scale.setValue(0, 0, scale.getValue(0, 0) * -1.0f);
@@ -95,7 +90,18 @@ void Node::updateTransform()
 		if (_flipY)
 			scale.setValue(1, 1, scale.getValue(1, 1) * -1.0f);
 
-		_transform = translation * scale * rotation * skew;
+		auto&& rotation = Transform::createRotation(util::deg_to_rad(_angle));
+
+		auto&& rotScale =
+			Transform::createTranslation(centerInPixels) *
+			scale *
+			rotation *
+			Transform::createTranslation(-centerInPixels);
+
+		auto&& skew = Transform::createSkewX(util::deg_to_rad(_skewX)) *
+			Transform::createSkewY(util::deg_to_rad(_skewY));
+
+		_transform = translation * rotScale * skew;
 
 		_transformUpdated = false;
 	}

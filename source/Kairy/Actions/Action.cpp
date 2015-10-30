@@ -53,6 +53,8 @@ void Action::start(Node* target)
 
 void Action::stop(void)
 {
+	step(1.0f);
+
 	_target = nullptr;
 	_done = true;
 }
