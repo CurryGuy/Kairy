@@ -23,6 +23,7 @@
  *****************************************************************************/
 
 #include <Kairy/System/Directory.h>
+#include <Kairy/System/File.h>
 #ifdef _3DS
 #include <unistd.h>
 #else
@@ -179,7 +180,11 @@ bool Directory::getFiles(const std::string & dir, std::vector<std::string>& outF
 			while (*p++) ++len;
 			auto size = utf16_to_utf8((uint8_t*)filename, entry.name, len);
 			filename[size] = '\0';
-			outFiles.push_back(std::string(filename));
+
+			if (File::exists(filename))
+			{
+				outFiles.push_back(std::string(filename));
+			}
 		}
 		else
 		{
@@ -200,7 +205,73 @@ bool Directory::getFiles(const std::string & dir, std::vector<std::string>& outF
 		boost::filesystem::directory_iterator(dir), {}))
 	{
 		if (boost::filesystem::is_regular_file(entry))
-			outFiles.push_back(entry.path().string());
+			outFiles.push_back(entry.path().filename().string());
+	}
+
+	return true;
+
+#endif // _3DS
+}
+
+//=============================================================================
+
+bool Directory::getEntries(const std::string & dir, std::vector<std::string>& outEntries)
+{
+	outEntries.clear();
+
+#ifdef _3DS
+	openSdArchive();
+
+	Handle handle;
+	Result ret;
+
+	ret = FSUSER_OpenDirectory(nullptr, &handle,
+		sdmc_archive, FS_makePath(PATH_CHAR, dir.c_str()));
+
+	if (ret != 0)
+	{
+		closeSdArchive();
+		return false;
+	}
+
+	FS_dirent entry;
+
+	u32 entriesRead = 1;
+	char filename[1024]{ 0 };
+
+	for (;;)
+	{
+		entriesRead = 0;
+		FSDIR_Read(handle, &entriesRead, 1, &entry);
+
+		if (entriesRead != 0)
+		{
+			u32 len = 0;
+			auto* p = entry.name;
+			while (*p++) ++len;
+			auto size = utf16_to_utf8((uint8_t*)filename, entry.name, len);
+			filename[size] = '\0';
+			outEntries.push_back(std::string(filename));
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	FSDIR_Close(handle);
+
+	closeSdArchive();
+
+	return true;
+#else
+	if (!boost::filesystem::is_directory(dir))
+		return false;
+
+	for (auto& entry : boost::make_iterator_range(
+		boost::filesystem::directory_iterator(dir), {}))
+	{
+		outEntries.push_back(entry.path().filename().string());
 	}
 
 	return true;
@@ -213,7 +284,36 @@ bool Directory::getFiles(const std::string & dir, std::vector<std::string>& outF
 bool Directory::copy(const std::string & src, const std::string & dst)
 {
 #ifdef _3DS
-	return false;
+	Directory::createDirectory(dst);
+
+	std::vector<std::string> entries;
+
+	if (!getEntries(src, entries))
+	{
+		return false;
+	}
+
+	for (auto& entry : entries)
+	{
+		if (entry == "." || entry == "..")
+		{
+			continue;
+		}
+
+		auto&& srcEntry = src + '/' + entry;
+		auto&& dstEntry = dst + '/' + entry;
+
+		if (File::exists(srcEntry))
+		{
+			File::copy(srcEntry, dstEntry);
+		}
+		else
+		{
+			Directory::copy(srcEntry, dstEntry);
+		}
+	}
+
+	return true;
 #else
 	boost::filesystem::copy_directory(src, dst);
 	return true;

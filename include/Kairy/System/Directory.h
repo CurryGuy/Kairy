@@ -45,6 +45,8 @@ public:
 
     static bool getFiles(const std::string& dir, std::vector<std::string>& outFiles);
 
+	static bool getEntries(const std::string& dir, std::vector<std::string>& outEntries);
+
 	static bool copy(const std::string& src, const std::string& dst);
 
     static bool move(const std::string& src, const std::string& dst);

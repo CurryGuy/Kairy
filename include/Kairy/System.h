@@ -27,6 +27,7 @@
 
 #include "System/InputManager.h"
 #include "System/Directory.h"
+#include "System/File.h"
 #include "System/Random.h"
 #include "System/Thread.h"
 #include "System/Time.h"
