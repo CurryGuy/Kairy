@@ -28,6 +28,7 @@
 #include <Kairy/Ext/hqx/hqx.h>
 #include <Kairy/Util/Radians.h>
 #include <Kairy/Util/Zip.h>
+#include <Kairy/System/File.h>
 
 NS_KAIRY_BEGIN
 
@@ -191,21 +192,18 @@ bool Image::save(const std::string& filename, const Color& trans)
         return false;
     }
 
-    auto dotIndex = filename.find_last_of('.');
-    if(dotIndex == std::string::npos)
-        dotIndex = 0;
-    std::string ext = filename.substr(dotIndex + 1, filename.length() - 1);
+	auto ext = File::getExtension(filename);
     ImageFormat format;
 
-    if(ext == "bmp")
+    if(ext == ".bmp")
     {
         format = ImageFormat::Bmp;
     }
-    else if(ext == "jpg")
+    else if(ext == ".jpg")
     {
         format = ImageFormat::Jpg;
     }
-    else if(ext == "tga")
+    else if(ext == ".tga")
     {
         format = ImageFormat::Tga;
     }

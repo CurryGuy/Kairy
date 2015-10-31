@@ -35,6 +35,20 @@ static FS_archive sdmc_archive;
 
 //=============================================================================
 
+std::string File::getExtension(const std::string & filename)
+{
+	auto pos = filename.find_last_of('.');
+
+	if (pos == std::string::npos)
+	{
+		return "";
+	}
+
+	return filename.substr(pos);
+}
+
+//=============================================================================
+
 bool File::copy(const std::string& src, const std::string& dst)
 {
 	std::ifstream ss(src, std::ios::binary);

@@ -181,7 +181,7 @@ bool Directory::getFiles(const std::string & dir, std::vector<std::string>& outF
 			auto size = utf16_to_utf8((uint8_t*)filename, entry.name, len);
 			filename[size] = '\0';
 
-			if (File::exists(filename))
+			if (File::exists(dir + '/' + filename))
 			{
 				outFiles.push_back(std::string(filename));
 			}

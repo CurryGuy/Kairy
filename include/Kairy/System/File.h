@@ -33,6 +33,8 @@ class File
 {
 public:
 
+	static std::string getExtension(const std::string& filename);
+
 	static bool copy(const std::string& src, const std::string& dst);
 
 	static bool createFile(const std::string& filename);
