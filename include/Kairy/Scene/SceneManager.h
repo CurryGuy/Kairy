@@ -51,7 +51,9 @@ public:
 	void draw();
 	
 	void update(float dt);
-
+	
+	SceneManager& operator=(const SceneManager&) = delete;
+	
 private:
 	friend class RenderDevice;
 	friend class InputManager;

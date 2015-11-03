@@ -49,6 +49,7 @@ Music::Music(void)
 	, _pan(0.0f)
 	, _vorbisStream(nullptr)
 	, _wavStream(nullptr)
+	, _playingThread([this](void*) { while(!_stopped) update(); })
 {
 	_samplesBuffer.resize(BUFFER_SIZE);
 
@@ -221,6 +222,8 @@ void Music::play()
 		(!_vorbisStream && !_wavStream) || isPlaying())
 		return;
 
+	_playingThread.join();
+
 #ifdef _3DS
 	auto freeChannels = _audio->getFreeChannels();
 
@@ -338,6 +341,8 @@ void Music::play()
 
 	_stopped = false;
 	_paused = false;
+
+	_playingThread.start();
 }
 
 //=============================================================================

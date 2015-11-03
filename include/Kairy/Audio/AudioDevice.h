@@ -43,8 +43,6 @@ public:
 
 	static AudioDevice* getInstance();
 
-    virtual ~AudioDevice();
-
     bool init();
 
     void destroy();
@@ -77,8 +75,12 @@ public:
 	
 	void clearPlayingMusic();
 	
+	AudioDevice(const AudioDevice&) = delete;
+	AudioDevice& operator=(const AudioDevice&) = delete;
+	virtual ~AudioDevice();
+	
 private:
-
+	
 	AudioDevice(void);
 	
 	std::vector<Sound*> _playingSounds;

@@ -76,9 +76,9 @@ public:
 
 	bool isPlaying() const;
 	
-	void update();
-	
 private:
+	void update();
+
 	AudioDevice* _audio;
 
 	Uint16 _channels;
@@ -96,6 +96,8 @@ private:
 	FILE* _wavStream;
 
 	std::vector<byte> _samplesBuffer;
+
+	Thread _playingThread;
 
 #ifdef _3DS
 	bool separateChannels(void);

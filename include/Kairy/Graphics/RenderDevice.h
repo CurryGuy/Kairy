@@ -212,7 +212,10 @@ public:
      */
     bool takeScreenshot(const std::string& filename, ImageFormat format,
             Screen screen, Side side = Side::Left);
-
+	
+	RenderDevice(const RenderDevice&) = delete;
+	RenderDevice& operator=(const RenderDevice&) = delete;
+	
 private:
 	friend class RenderTexture;
 

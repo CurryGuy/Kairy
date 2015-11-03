@@ -170,9 +170,7 @@
 // If MINIZ_NO_TIME is specified then the ZIP archive functions will not be able to get the current time, or
 // get/set file times, and the C run-time funcs that get/set times won't be called.
 // The current downside is the times written to your archives will be from 1979.
-#ifdef _3DS
-#define MINIZ_NO_TIME
-#endif // _3DS
+//#define MINIZ_NO_TIME
 
 // Define MINIZ_NO_ARCHIVE_APIS to disable all ZIP archive API's.
 //#define MINIZ_NO_ARCHIVE_APIS
@@ -220,6 +218,13 @@
 // Set MINIZ_HAS_64BIT_REGISTERS to 1 if operations on 64-bit integers are reasonably fast (and don't involve compiler generated calls to helper functions).
 #define MINIZ_HAS_64BIT_REGISTERS 1
 #endif
+
+#ifdef _3DS
+#define MINIZ_NO_TIME
+#define MINIZ_LITTLE_ENDIAN 1
+#define MINIZ_HAS_64BIT_REGISTERS 0
+#define MINIZ_USE_UNALIGNED_LOADS_AND_STORES 0
+#endif // _3DS
 
 #ifdef __cplusplus
 extern "C" {
